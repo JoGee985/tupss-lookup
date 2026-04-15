@@ -218,6 +218,13 @@
             font-size: 15px;
             font-weight: 500;
             color: #5a4a3c;
+            margin-bottom: 2px;
+        }
+
+        .result-email {
+            font-size: 13px;
+            font-weight: 400;
+            color: #7a6a5c;
             margin-bottom: 12px;
         }
 
@@ -373,6 +380,7 @@
                     <div id="resultBox" class="result-box">
                         <span id="resultIcon" class="result-icon"></span>
                         <div id="resultName" class="result-name"></div>
+                        <div id="resultEmail" class="result-email"></div>
                         <div id="resultStatus" class="result-status"></div>
                         <div id="resultCount" class="result-count"></div>
                         <div id="progressContainer" class="progress-bar-container">
@@ -451,10 +459,13 @@
             resultBox.className = 'result-box';
             progressBar.className = 'progress-bar';
             resultName.textContent = '';
+            document.getElementById('resultEmail').textContent = '';
             resultCount.innerHTML = '';
             progressContainer.style.display = 'none';
 
             const learner = learnerData[email];
+
+            const resultEmail = document.getElementById('resultEmail');
 
             if (!learner) {
                 resultBox.classList.add('not-found');
@@ -466,27 +477,19 @@
                 resultBox.classList.add('success');
                 resultIcon.textContent = '\u2714';
                 resultName.textContent = learner.name;
+                resultEmail.textContent = email;
                 resultStatus.textContent = 'All courses completed!';
-                resultCount.innerHTML = '14 <span>of 14</span>';
-                progressContainer.style.display = 'block';
-                progressBar.classList.add('full');
-                progressBar.style.width = '100%';
-                resultDetail.textContent =
-                    'This information has been provided to The UPS Stores but the records may lag by one to two weeks.';
             } else if (learner.completed > 0) {
                 resultBox.classList.add('partial');
                 resultIcon.textContent = '\u25D4';
                 resultName.textContent = learner.name;
+                resultEmail.textContent = email;
                 resultStatus.textContent = 'Some courses completed';
-                resultCount.innerHTML = learner.completed + ' <span>of 14</span>';
-                progressContainer.style.display = 'block';
-                progressBar.classList.add('partial');
-                progressBar.style.width = Math.round((learner.completed / 14) * 100) + '%';
-                resultDetail.textContent = '';
             } else {
                 resultBox.classList.add('none');
                 resultIcon.textContent = '\u25CB';
                 resultName.textContent = learner.name;
+                resultEmail.textContent = email;
                 resultStatus.textContent = 'No courses completed';
                 resultCount.innerHTML = '0 <span>of 14</span>';
                 progressContainer.style.display = 'block';
